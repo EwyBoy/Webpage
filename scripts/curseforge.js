@@ -12,7 +12,12 @@ const projectIDs = [
     '243951',
     '228809',
     '283415',
-    '237695',
+    '254916',
+
+    '227276',
+    '224841',
+    '236564',
+    '237695'
 ]
 
 function initialize() {
@@ -28,6 +33,16 @@ function httpGet(projectID) {
     xmlHttp.send( null );
 
     return xmlHttp.responseText;
+}
+
+function httpGetAsync(projectID, callback) {
+    const xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", 'https://api.cfwidget.com/' + projectID, true); // true for asynchronous
+    xmlHttp.send(null);
 }
 
 function formatNumber(number) {
