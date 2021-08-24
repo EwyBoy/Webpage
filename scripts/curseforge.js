@@ -38,10 +38,17 @@ function httpGet(projectID) {
 function httpGetAsync(projectID, callback) {
     const xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
+<<<<<<< Updated upstream
         if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
             callback(xmlHttp.responseText);
     }
     xmlHttp.open("GET", 'https://api.cfwidget.com/' + projectID, true); // true for asynchronous
+=======
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", 'https://api.cfwidget.com/' + projectID, true);
+>>>>>>> Stashed changes
     xmlHttp.send(null);
 }
 
@@ -52,12 +59,15 @@ function formatNumber(number) {
 function getProjectDownloads(projectID) {
     const webpage = document.getElementById(projectID);
 
-    let modJson = httpGet(projectID);
-    let modObj = JSON.parse(modJson);
 
-    let downloads = modObj.downloads.total;
-    console.log(formatNumber(downloads))
+    httpGetAsync(projectID, function(modJson) {
+        let modObj = JSON.parse(modJson);
 
-    webpage.innerHTML = formatNumber(downloads) + ' downloads';
+        let downloads = modObj.downloads.total;
+        console.log(formatNumber(downloads))
+
+        webpage.innerHTML = formatNumber(downloads) + ' downloads';
+    })
+
 }
 
